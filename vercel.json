@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "name": "code-guard-server",
+    "builds": [
+      {
+        "src": "main.py",
+        "use": "@vercel/python"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "main.py"
+      }
+    ]
+  }
+  
