@@ -1,6 +1,7 @@
 import random
 from models import Encrypt, Decrypt
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from encryptDecrypt import fullEncryption, fullDecryption
 
 def generatePassword():
@@ -16,6 +17,13 @@ def decryptPassword(encodedPassword):
     return fullDecryption(10, encodedPassword)
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow requests from any origin
+    allow_credentials=True,  # Allow sending cookies with requests
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers in the request
+)
 
 @app.get("/generate")
 async def root():
