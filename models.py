@@ -7,3 +7,7 @@ class Encrypt(BaseModel):
 
 class Decrypt(BaseModel):
     decrypt: List[str]
+
+class Email(BaseModel):
+    email: str
+    passwords: str
