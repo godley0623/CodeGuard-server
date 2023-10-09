@@ -1,4 +1,5 @@
 import random
+import os
 from models import Encrypt, Decrypt, Email
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -40,6 +41,7 @@ async def decrypt(decrypt: Decrypt):
 
 @app.get("/email")
 async def email(email: Email):
+    EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
     port = 465  # For SSL
     smtp_server = "smtp.gmail.com"
     sender_email = "codeguardpass@gmail.com"
