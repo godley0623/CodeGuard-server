@@ -39,7 +39,7 @@ async def encrypt(encrypt: Encrypt):
 async def decrypt(decrypt: Decrypt):
     return {"message": decryptPassword(decrypt.decrypt)}
 
-@app.get("/email")
+@app.post("/email")
 async def email(email: Email):
     EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
     port = 465  # For SSL
