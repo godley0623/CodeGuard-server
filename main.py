@@ -48,7 +48,7 @@ async def email(email: Email):
     sender_email = "codeguardpass@gmail.com"
     receiver_email = email.email 
     password = EMAIL_PASSWORD
-    message = MIMEText(f"Subject: Your Generated Password\n\n{email.passwords}", "plain", "utf-8")
+    message = f"Subject: Your Generated Password\n\n{email.passwords}"
 
     #context = ssl.create_default_context()
     server = smtplib.SMTP(smtp_server, port)
