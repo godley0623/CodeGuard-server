@@ -3,7 +3,8 @@ import os
 from models import Encrypt, Decrypt, Email
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import smtplib, ssl
+import smtplib
+from email.mime.text import MIMEText
 from encryptDecrypt import fullEncryption, fullDecryption
 
 def generatePassword():
@@ -42,16 +43,19 @@ async def decrypt(decrypt: Decrypt):
 @app.post("/email")
 async def email(email: Email):
     EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
-    port = 465  # For SSL
+    port = 587 # For SSL
     smtp_server = "smtp.gmail.com"
     sender_email = "codeguardpass@gmail.com"
     receiver_email = email.email 
     password = EMAIL_PASSWORD
-    message = f"Subject: Your Generated Password\n\n{email.passwords}"
+    message = MIMEText(f"Subject: Your Generated Password\n\n{email.passwords}", "plain", "utf-8")
 
-    context = ssl.create_default_context()
-    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-        server.login(sender_email, password)
-        server.sendmail(sender_email, receiver_email, message)
+    #context = ssl.create_default_context()
+    server = smtplib.SMTP(smtp_server, port)
+    server.starttls()
+    server.login(sender_email, password)
+    server.sendmail(sender_email, receiver_email, message.as_string())
+    server.quit()
+    print("Email was sent")
 
     return {"message": "email sent successfully"}
