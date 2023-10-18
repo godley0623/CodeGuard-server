@@ -30,7 +30,7 @@ app.add_middleware(
 
 @app.get("/generate")
 async def root():
-    return {"message": generatePassword()}
+    return {"message": MIMEText(generatePassword(), 'plain', 'utf-8')}
 
 @app.post("/encrypt")
 async def encrypt(encrypt: Encrypt):
