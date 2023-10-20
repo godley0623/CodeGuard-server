@@ -11,7 +11,7 @@ def generatePassword():
     seed = f'{random.randrange(1000, 10000000000)}'
     password = fullEncryption(100, 10, seed)
 
-    return ''.join(password)
+    return MIMEText(''.join(password), "plain", "utf-8")
 
 def encryptPassword(password):
     return fullEncryption(150, 10, password)
@@ -30,7 +30,7 @@ app.add_middleware(
 
 @app.get("/generate")
 async def root():
-    return {"message": MIMEText(generatePassword(), 'plain', 'utf-8')}
+    return {"message": generatePassword()}
 
 @app.post("/encrypt")
 async def encrypt(encrypt: Encrypt):
